@@ -1,0 +1,4 @@
+interface:
+  display_name: "Word 转 Markdown"
+  short_description: "将 DOCX 转为可供 PPT 流程读取的 Markdown"
+  default_prompt: "请使用 $convert-word-to-md，将指定 DOCX 转换为 Markdown，并保留表格与图片引用。"

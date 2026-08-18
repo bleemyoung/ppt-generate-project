@@ -1,0 +1,14 @@
+{
+  "name": "portable-ai-ppt-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Portable Agent workspace for staged, editable PowerPoint generation",
+  "engines": {
+    "node": ">=22 <27"
+  },
+  "packageManager": "pnpm@11.22.0",
+  "dependencies": {
+    "pptxgenjs": "4.0.1"
+  }
+}

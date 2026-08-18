@@ -1,0 +1,4 @@
+interface:
+  display_name: "从材料生成 PPT"
+  short_description: "从原始材料分阶段生成可复现、可编辑的 PowerPoint"
+  default_prompt: "请使用 $build-ppt-from-source，从指定材料开始，用通俗语言引导我确认需求，并依次生成可编辑的 PPT。"

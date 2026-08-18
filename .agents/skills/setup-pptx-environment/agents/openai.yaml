@@ -1,0 +1,4 @@
+interface:
+  display_name: "PPT 环境准备"
+  short_description: "为新手检查并准备 Node.js 与 PptxGenJS 环境"
+  default_prompt: "请使用 $setup-pptx-environment，用通俗语言检查当前项目的 PPT 生成环境；需要安装依赖或修改文件时先征得我的确认。"

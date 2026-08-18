@@ -1,0 +1,9 @@
+!.agents/
+!.agents/**
+
+node_modules/
+.venv/
+input/.converted/
+output/qa-render/
+output/slide-*.png
+output/montage*.png
