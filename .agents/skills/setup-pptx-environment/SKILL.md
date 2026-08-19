@@ -144,6 +144,6 @@ const pptxgen = require("pptxgenjs");
 - DOCX：Python/MarkItDown 已就绪或暂不可用；
 - 修改文件：没有则写“无”；
 - 验证结果：完全就绪、部分就绪、需要用户操作或阻塞；
-- 下一步：返回 `$build-ppt-from-source` 暂停的阶段；无法注册调用时读取其相对路径。
+- 下一步：若此前存在被环境准备中断的 PPT 阶段，返回该阶段继续；否则环境已就绪，等待用户提供材料后进入 `$build-ppt-from-source` 的需求澄清。客户端无法注册调用 Skill 时，读取其相对路径 `.agents/skills/build-ppt-from-source/SKILL.md`。
 
 不要把命令输出中的用户名、磁盘目录或机器信息复制到长期文档。

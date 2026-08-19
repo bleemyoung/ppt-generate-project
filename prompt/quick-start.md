@@ -18,7 +18,7 @@
 我没有技术背景，请用通俗语言引导我完成必要确认。
 ```
 
-Agent 会自行检查环境、询问 PPT 目的与受众、依次确认 `lecture.md` 和 `storyboard.md`，最后默认生成并执行构建脚本。
+Agent 会自行检查环境、询问 PPT 目的与受众、依次确认 `intermediate/lecture.md` 和 `intermediate/storyboard.md`，最后默认生成并执行构建脚本。
 
 ## Agent 未自动读取工作区规则时
 

@@ -5,17 +5,18 @@ description: 从 Markdown、DOCX、报告或笔记开始，通过需求澄清、
 
 # 从原始材料生成 PPT
 
-把确认事实保存在 `lecture.md`，把逐页决策保存在 `storyboard.md`，把实现保存在 `scripts/build.mjs`。默认工作区根目录是包含本 Skill 的项目根目录。
+把确认事实保存在 `intermediate/lecture.md`，把逐页决策保存在 `intermediate/storyboard.md`，把实现保存在 `scripts/build.mjs`。默认工作区根目录是包含本 Skill 的项目根目录。
 
 ## 默认文件位置
 
 ```text
 <工作区>/
-├── input/                         # 建议放置原始材料
-├── lecture.md                     # 内容与事实契约
-├── storyboard.md                  # 页面与版式契约
-├── scripts/build.mjs              # 可重复构建脚本
-└── output/<名称>.generated.pptx   # 自动生成、允许覆盖
+├── input/                          # 建议放置原始材料
+├── intermediate/                   # 中间产出（lecture、storyboard 等阶段契约）
+│   ├── lecture.md                  # 内容与事实契约
+│   └── storyboard.md               # 页面与版式契约
+├── scripts/build.mjs               # 可重复构建脚本
+└── output/<名称>.generated.pptx    # 自动生成、允许覆盖
 ```
 
 用户明确指定其他路径时遵从用户；否则不得让非技术用户选择内部目录。不得把本机绝对路径写入长期文件。
@@ -58,7 +59,7 @@ description: 从 Markdown、DOCX、报告或笔记开始，通过需求澄清、
 - 每个待确认项给出推荐答案和一句影响说明。
 - 允许用户回复 `1、2、3确认；4改为……`。
 - 可选项缺失时提出保守默认值，不把猜测静默升级为要求。
-- Brief 确认后写入 `lecture.md` 前部，作为后续共同契约。
+- Brief 确认后写入 `intermediate/lecture.md` 前部，作为后续共同契约。
 
 ## 环境衔接
 

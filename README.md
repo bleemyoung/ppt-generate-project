@@ -1,10 +1,7 @@
 # 可移植 AI 辅助 PPT 工作区
 
 把本目录作为独立工作区交给具备文件读写和命令执行能力的 Agent，即可从 Markdown 或 DOCX 分阶段生成可编辑 PPTX。普通用户只需提供材料路径，其余流程封装在项目级 Skill 中。
-## 记录
-优化点：skill的反馈提示不对
-产出目录不对，跟项目结构混在一起
-.venv是什么框架，转md吗
+
 ## 目录
 
 ```text
@@ -12,33 +9,46 @@ modal/
 ├── AGENTS.md
 ├── CONTEXT.md
 ├── README.md
-├── quick-start.md
-├── prompt-template.md
-├── migration-prompt.md
 ├── package.json
 ├── .nvmrc
 ├── .gitignore
-├── input/
-├── output/
-├── scripts/
+├── input/                       # 原始材料
+├── intermediate/                # 中间产出：lecture.md、storyboard.md
+├── prompt/                      # 提示词入口
+│   ├── quick-start.md
+│   ├── prompt-template.md
+│   └── migration-prompt.md
+├── output/                      # PPTX 输出
+├── scripts/                     # 构建脚本
 └── .agents/
     └── skills/
         ├── setup-pptx-environment/
         ├── build-ppt-from-source/
-        └── convert-word-to-md/
+        ├── convert-word-to-md/
+        └── grilling/
 ```
+
+## 提示词映射
+
+| 文件 | 用途 | 适用场景 |
+| --- | --- | --- |
+| `prompt/quick-start.md` | 普通用户快速开始 | 第一次使用、没有技术背景 |
+| `prompt/prompt-template.md` | 高级调用模板（指定阶段、输出名称、额外约束） | 需要控制流程或复用参数 |
+| `prompt/migration-prompt.md` | 把工作流接入已有项目 | 迁移模式，非默认路径 |
 
 ## 最短使用方式
 
 1. 把 `modal/` 作为 Agent 工作区打开。
 2. 将材料放入 `input/`，或保留在原位置。
-3. 复制 `quick-start.md` 的普通用户提示词。
+3. 复制 `prompt/quick-start.md` 的普通用户提示词。
 4. Agent 检查环境；有系统或项目变更时先请求确认。
-5. 依次确认 Brief、`lecture.md` 和 `storyboard.md`。
+5. 依次确认 Brief、`intermediate/lecture.md` 和 `intermediate/storyboard.md`。
 6. storyboard 确认后，Agent 默认生成并执行 `scripts/build.mjs`。
 7. PPTX 输出到 `output/`；默认不生成 PNG。
 
 客户端不支持 Skill 注册时，Agent 直接读取 `.agents/skills/*/SKILL.md`，无需用户手动安装到个人目录。
+
+需求边界需要逐项拷问时，可要求 Agent 读取 `.agents/skills/grilling/SKILL.md` 执行边界确认。
 
 ## 环境基线
 
@@ -62,9 +72,9 @@ modal/
 
 ```text
 原始材料
-→ lecture.md          内容事实契约
-→ storyboard.md       页面与版式契约
-→ scripts/build.mjs   可重复实现
+→ intermediate/lecture.md      内容事实契约
+→ intermediate/storyboard.md   页面与版式契约
+→ scripts/build.mjs            可重复实现
 → output/*.generated.pptx
 ```
 
@@ -75,7 +85,7 @@ modal/
 ## 两种交付模式
 
 - 默认：直接交付完整 `modal/`，作为可移植 PPT 工作区。
-- 备用：使用 `migration-prompt.md`，由 Agent 把能力接入已有项目。
+- 备用：使用 `prompt/migration-prompt.md`，由 Agent 把能力接入已有项目。
 
 ## QA 边界
 

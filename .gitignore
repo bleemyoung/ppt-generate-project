@@ -7,3 +7,10 @@ input/.converted/
 output/qa-render/
 output/slide-*.png
 output/montage*.png
+
+# Microsoft Office temporary files
+~$*
+
+# macOS
+.DS_Store
+._*
