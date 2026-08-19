@@ -2,7 +2,15 @@ import type { DeckSpec } from "./contracts.js";
 
 export const deckSpec: DeckSpec = {
   design: {
-    theme: { id: "swiss-grid" },
+    theme: {
+      id: "swiss-grid",
+      overrides: {
+        colors: {
+          accent: "2457D6",
+          accent2: "0B3C9C",
+        },
+      },
+    },
     seed: "sui-shen-xing-ppt-practice",
     variation: "balanced",
   },
