@@ -8,6 +8,8 @@ output/qa-render/
 output/slide-*.png
 output/montage*.png
 examples/*/output/
+#
+.npm-cache
 
 # Microsoft Office temporary files
 ~$*

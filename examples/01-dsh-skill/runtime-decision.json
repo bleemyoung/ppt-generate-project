@@ -1,0 +1,10 @@
+{
+  "selectedRuntime": "node",
+  "reason": "host-no-browser",
+  "resolvedPreviewUrl": "https://openhacking.github.io/pptkit-presentation/",
+  "browserCheck": {
+    "status": "not-required",
+    "step": "host-capability",
+    "evidence": "DeepSeek Harness web profile: no browser tool in the agent tool set"
+  }
+}
