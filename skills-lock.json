@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "pptkit-presentation": {
+      "source": "openHacking/pptkit-presentation",
+      "sourceType": "github",
+      "skillPath": "skills/pptkit-presentation/SKILL.md",
+      "computedHash": "0507d070aea27f8b905de9a2d745e736b2e348aca00febb7bc2c5ffbe7add9da"
+    }
+  }
+}
