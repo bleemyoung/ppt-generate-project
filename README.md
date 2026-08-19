@@ -19,7 +19,10 @@ modal/
 │   ├── prompt-template.md
 │   └── migration-prompt.md
 ├── output/                      # PPTX 输出
+├── output_final/                # 人工定稿版
 ├── scripts/                     # 构建脚本
+├── examples/                    # 可复现的完整参考案例
+│   └── 随身行PPT实践/
 └── .agents/
     └── skills/
         ├── setup-pptx-environment/
@@ -31,6 +34,8 @@ modal/
 ## 新手入口
 
 完全不懂代码的新手：先读 `新手手册.md`，按其中 8 个步骤操作，无需理解目录、命令或阶段名。
+
+完整参考案例位于 `examples/随身行PPT实践/`，对应人工定稿版为 `output_final/0818-1-随身行PPT实践.final.pptx`。
 
 ## 提示词映射
 
