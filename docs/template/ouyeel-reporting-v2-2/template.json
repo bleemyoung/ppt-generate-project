@@ -1,0 +1,17 @@
+{
+  "id": "ouyeel-reporting-v2-2",
+  "name": "欧冶云商汇报类材料公司模板",
+  "version": "2.2",
+  "kind": "presentation",
+  "triggers": [
+    "使用公司模板",
+    "使用欧冶云商模板",
+    "按公司PPT模板制作",
+    "按公司模板制作PPT"
+  ],
+  "reference": "reference.pptx",
+  "preview": "preview.png",
+  "overview": "overview.png",
+  "slideCount": 12,
+  "usage": "template-following"
+}
