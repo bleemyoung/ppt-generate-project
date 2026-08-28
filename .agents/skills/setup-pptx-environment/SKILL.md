@@ -1,11 +1,11 @@
 ---
 name: setup-pptx-environment
-description: 为没有技术背景的用户检查、解释并准备可移植 PPT 工作区所需环境，包括 Node.js、pnpm/npm、PptxGenJS，以及 DOCX 输入需要的 Python 与 MarkItDown。适用于首次部署、换电脑、命令不可用、依赖缺失、锁文件冲突或 build.mjs 无法加载依赖。默认先只读检查；下载程序、安装依赖、创建或修改项目文件、修改 PATH、创建系统链接或申请管理员权限前必须说明影响并取得确认。
+description: 为没有技术背景的用户检查、解释并准备可移植 PPT 工作区所需环境，包括 Node.js、pnpm/npm、PptxGenJS，以及 DOCX、XLSX 输入需要的 Python 与 MarkItDown。适用于首次部署、换电脑、命令不可用、依赖缺失、锁文件冲突或 build.mjs 无法加载依赖。默认先只读检查；下载程序、安装依赖、创建或修改项目文件、修改 PATH、创建系统链接或申请管理员权限前必须说明影响并取得确认。
 ---
 
 # 准备 PPT 工作区环境
 
-把当前工作区准备到“可以转换 DOCX、检查构建脚本并运行 PptxGenJS”的状态。只处理环境，不生成业务 PPTX，不运行视觉 QA。
+把当前工作区准备到“可以转换 DOCX、XLSX，检查构建脚本并运行 PptxGenJS”的状态。只处理环境，不生成业务 PPTX，不运行视觉 QA。
 
 ## 环境基线
 
@@ -14,6 +14,7 @@ description: 为没有技术背景的用户检查、解释并准备可移植 PPT
 - 备选：既有项目使用 npm、pnpm 不可用或用户明确选择 npm 时使用 npm。
 - PptxGenJS：按工作区 `package.json` 固定版本安装。
 - DOCX：Python 3.10+、`markitdown[docx]` 按转换 Skill 的 requirements 固定版本安装。
+- XLSX：Python 3.10+、`markitdown[xlsx]` 按转换 Skill 的 requirements 固定版本安装。
 - Node.js 20 及更早版本不作为新部署环境。
 
 ## 安全边界
@@ -25,7 +26,7 @@ description: 为没有技术背景的用户检查、解释并准备可移植 PPT
 - 不写死 Node.js、Python、pnpm 或项目的本机绝对路径。当前会话发现的路径只用于本次命令，不写入长期文件。
 - 每个工作区只使用 pnpm 或 npm 中的一种，只保留对应锁文件，不擅自删除冲突锁文件。
 - PptxGenJS 只作为项目依赖安装，不做全局安装。
-- 不安装 `@oai/artifact-tool`、PDF/Excel 转换器或图片工具。
+- 不安装 `@oai/artifact-tool`、PDF 转换器或图片工具；XLSX 转换依赖仅在用户确认后按项目 Skill 安装。
 - 不生成 PPTX、PDF、PNG、`qa-render` 或环境报告文件；结果直接在对话中汇报。
 
 ## 第一步：只读检查
@@ -39,7 +40,7 @@ description: 为没有技术背景的用户检查、解释并准备可移植 PPT
 5. `package.json`、`pnpm-lock.yaml`、`package-lock.json` 是否存在及是否冲突。
 6. 本地 `pptxgenjs` 是否声明并可解析。
 7. `python --version`、`python -m pip --version` 是否可用。
-8. `markitdown` 是否可加载；完整工作区验收默认包含 DOCX 能力。
+8. `markitdown`、`pandas`、`openpyxl` 是否可加载；完整工作区验收默认包含 DOCX 与 XLSX 能力。
 9. `scripts/build.mjs` 是否存在；此时不要执行它。
 
 不要向新手询问 Node/Python 路径、全局模块目录或 ESM/CommonJS 参数。事实由 Agent 检查，只有方案选择和有风险的变更交给用户。
@@ -49,7 +50,7 @@ description: 为没有技术背景的用户检查、解释并准备可移植 PPT
 | 状态 | 含义 | 下一步 |
 | --- | --- | --- |
 | 完全就绪 | Node、包管理器、PptxGenJS、Python、MarkItDown 均通过 | 执行最小验证 |
-| PPT 就绪、DOCX 未就绪 | PptxGenJS 可用，但 Python/MarkItDown 缺失 | 说明 Markdown 可用，建议补齐 DOCX 环境 |
+| PPT 就绪、材料转换未就绪 | PptxGenJS 可用，但 Python/MarkItDown 或 XLSX 依赖缺失 | 说明 Markdown 可用，建议补齐 DOCX/XLSX 环境 |
 | 缺少 Node.js | 无法运行 PptxGenJS | 提供辅助安装选项并确认 |
 | 缺少 pnpm | Node 可用但默认包管理器缺失 | 建议安装 pnpm 11.22.0，允许选择 npm |
 | 缺少项目依赖 | 包管理器可用但 PptxGenJS 缺失 | 确认后按清单安装 |
@@ -103,16 +104,16 @@ npm install
 
 工作区已预置 `package.json`，不要重复执行 `pnpm init` 或 `npm init`。首次安装只生成所选包管理器的锁文件。网络或权限失败时保留原始错误摘要并停止，不擅自换包管理器。
 
-## 第六步：准备 DOCX 转换环境
+## 第六步：准备 DOCX 与 XLSX 转换环境
 
-读取 `.agents/skills/convert-word-to-md/references/setup.md`。默认优先使用项目内 Python 虚拟环境，创建和安装前仍需确认：
+分别读取 `.agents/skills/convert-word-to-md/references/setup.md` 和 `.agents/skills/convert-excel-to-md/references/setup.md`。默认优先使用项目内 Python 虚拟环境，创建和安装前仍需确认：
 
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r .\.agents\skills\convert-word-to-md\scripts\requirements.txt
+.\.venv\Scripts\python.exe -m pip install -r .\.agents\skills\convert-word-to-md\scripts\requirements.txt -r .\.agents\skills\convert-excel-to-md\scripts\requirements.txt
 ```
 
-上例为 Windows；macOS/Linux 使用 `./.venv/bin/python`。无需依赖 shell 激活状态，也不得写入绝对路径。若用户只处理 Markdown，可以接受“PPT 就绪、DOCX 未就绪”，但必须明确 DOCX 暂不可用。
+上例为 Windows；macOS/Linux 使用 `./.venv/bin/python`。无需依赖 shell 激活状态，也不得写入绝对路径。若用户只处理 Markdown，可以接受“PPT 就绪、材料转换未就绪”，但必须明确 DOCX/XLSX 暂不可用。
 
 ## 第七步：最小验证
 
@@ -121,7 +122,7 @@ python -m venv .venv
 1. Node.js 是 24 LTS 或 22 LTS。
 2. 实际包管理器版本符合选择；默认 pnpm 应为 11.x。
 3. 本地 `pptxgenjs` 版本与 `package.json` 一致并可加载。
-4. DOCX 能力启用时，Python 为 3.10+，`MarkItDown` 可加载。
+4. DOCX/XLSX 能力启用时，Python 为 3.10+，`MarkItDown`、`pandas` 和 `openpyxl` 可加载。
 5. 已有 `scripts/build.mjs` 时运行 `node --check .\scripts\build.mjs`，但不执行构建。
 6. 没有生成 PPTX、PNG 或 QA 目录。
 
@@ -141,7 +142,7 @@ const pptxgen = require("pptxgenjs");
 - Node.js：版本或未安装；
 - 包管理器：pnpm/npm、版本及锁文件；
 - PptxGenJS：版本或未安装；
-- DOCX：Python/MarkItDown 已就绪或暂不可用；
+- DOCX/XLSX：Python/MarkItDown 及 Excel 依赖已就绪或暂不可用；
 - 修改文件：没有则写“无”；
 - 验证结果：完全就绪、部分就绪、需要用户操作或阻塞；
 - 下一步：若此前存在被环境准备中断的 PPT 阶段，返回该阶段继续；否则环境已就绪，等待用户提供材料后进入 `$build-ppt-from-source` 的需求澄清。客户端无法注册调用 Skill 时，读取其相对路径 `.agents/skills/build-ppt-from-source/SKILL.md`。

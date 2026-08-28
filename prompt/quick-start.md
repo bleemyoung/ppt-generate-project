@@ -1,38 +1,36 @@
-# 快速开始
+# 非开发同事快速开始
 
 ## 使用前
 
-1. 将整个 `modal/` 目录交给同事。
-2. 在 Agent 客户端中把 `modal/` 本身作为工作区打开。
-3. 将材料放入 `input/`，或直接提供材料路径。
+1. 将整个项目目录交给同事，不携带 `node_modules/` 和 `.venv/`。
+2. 在 DSH 中把项目根目录作为工作区打开。
+3. 将材料和参考 PPT/PPTX 放入 `input/`。
 
-## 普通用户提示词
+## 直接使用
 
-只替换材料位置：
-
-```text
-请先阅读当前工作区的 AGENTS.md，并按照其中的 PPT 工作流处理。
-
-材料：<文件或目录>
-
-我没有技术背景，请用通俗语言引导我完成必要确认。
-```
-
-Agent 会自行检查环境、询问 PPT 目的与受众、依次确认 `intermediate/lecture.md` 和 `intermediate/storyboard.md`，最后默认生成并执行构建脚本。
-
-## Agent 未自动读取工作区规则时
-
-使用以下提示词：
+向 Agent 发送：
 
 ```text
-请先读取并严格执行：
-./.agents/skills/build-ppt-from-source/SKILL.md
-
-如果环境未就绪，请按该 Skill 的路由读取：
-./.agents/skills/setup-pptx-environment/SKILL.md
-
-材料：<文件或目录>
-我没有技术背景，请用通俗语言引导我完成必要确认。
+请读取并严格执行 prompt/colleague-ppt-workflow.md。
 ```
 
-无需手动注册 `$skill-name`。支持项目级 Skill 自动发现的客户端也可以直接调用 `$build-ppt-from-source`。
+提示词会自动扫描 `input/`、检查环境，并按 Brief、lecture、storyboard、build、execute 和人工视觉验收的确认门推进。无需修改提示词，也无需手动注册 Skill。
+
+如果材料位于其他位置，可以补充：
+
+```text
+请读取并严格执行 prompt/colleague-ppt-workflow.md。
+本次还需要读取：<文件或目录路径>
+```
+
+## 常用回复
+
+```text
+同意
+```
+
+或者：
+
+```text
+1、2、3同意；4改为管理层汇报；5控制在10页以内。
+```

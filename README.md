@@ -1,6 +1,6 @@
 # 可移植 AI 辅助 PPT 工作区
 
-把本目录作为独立工作区交给具备文件读写和命令执行能力的 Agent，即可从 Markdown 或 DOCX 分阶段生成可编辑 PPTX。普通用户只需提供材料路径，其余流程封装在项目级 Skill 中。
+把本目录作为独立工作区交给具备文件读写和命令执行能力的 Agent，即可从 Markdown、DOCX 或 XLSX 分阶段生成可编辑 PPTX。普通用户只需提供材料路径，其余流程封装在项目级 Skill 中。
 
 ## 目录
 
@@ -16,18 +16,21 @@ modal/
 ├── intermediate/                # 中间产出：lecture.md、storyboard.md
 ├── prompt/                      # 提示词入口
 │   ├── quick-start.md
+│   ├── colleague-ppt-workflow.md
 │   ├── prompt-template.md
 │   └── migration-prompt.md
 ├── output/                      # PPTX 输出
 ├── output_final/                # 人工定稿版
 ├── scripts/                     # 构建脚本
 ├── examples/                    # 可复现的完整参考案例
+│   ├── template-driven-case/    # 不含真实业务数据的 PptxGenJS 合成案例
 │   └── 随身行PPT实践/
 └── .agents/
     └── skills/
         ├── setup-pptx-environment/
         ├── build-ppt-from-source/
         ├── convert-word-to-md/
+        ├── convert-excel-to-md/
         └── grilling/
 ```
 
@@ -37,11 +40,14 @@ modal/
 
 完整参考案例位于 `examples/随身行PPT实践/`，对应人工定稿版为 `output_final/0818-1-随身行PPT实践.final.pptx`。
 
+陌生 Agent 首次创建 `scripts/build.mjs` 时，由 `build-ppt-from-source` 自动路由到 Skill 内的 `assets/build-starter.mjs`、PptxGenJS 构建约定和 `examples/template-driven-case/`；空模板不依赖当前业务脚本提供实现上下文。
+
 ## 提示词映射
 
 | 文件 | 用途 | 适用场景 |
 | --- | --- | --- |
 | `prompt/quick-start.md` | 普通用户快速开始 | 第一次使用、没有技术背景 |
+| `prompt/colleague-ppt-workflow.md` | 可直接引用的非开发同事全流程提示词 | 新机器首次启动或日常制作 PPT |
 | `prompt/prompt-template.md` | 高级调用模板（指定阶段、输出名称、额外约束） | 需要控制流程或复用参数 |
 | `prompt/migration-prompt.md` | 把工作流接入已有项目 | 迁移模式，非默认路径 |
 
@@ -49,7 +55,7 @@ modal/
 
 1. 把 `modal/` 作为 Agent 工作区打开。
 2. 将材料放入 `input/`，或保留在原位置。
-3. 复制 `prompt/quick-start.md` 的普通用户提示词。
+3. 向 Agent 发送“请读取并严格执行 `prompt/colleague-ppt-workflow.md`”。
 4. Agent 检查环境；有系统或项目变更时先请求确认。
 5. 依次确认 Brief、`intermediate/lecture.md` 和 `intermediate/storyboard.md`。
 6. storyboard 确认后，Agent 默认生成并执行 `scripts/build.mjs`。
@@ -64,7 +70,7 @@ modal/
 - 默认 Node.js 24 LTS，兼容 Node.js 22 LTS。
 - 默认 pnpm 11.22.0；既有 npm 项目或用户明确选择时可使用 npm。
 - PptxGenJS 固定为 4.0.1。
-- DOCX 转换需要 Python 3.10+ 和固定版本的 MarkItDown。
+- DOCX、XLSX 转换需要 Python 3.10+ 和固定版本的 MarkItDown 及对应扩展。
 - 工作区首次交付不包含锁文件；首次安装只生成所选包管理器的一种锁文件。
 - `node_modules/` 和 `.venv/` 不随工作区交付。
 
@@ -74,8 +80,10 @@ modal/
 
 - Markdown：直接支持。
 - DOCX：通过随工作区携带的 `convert-word-to-md` 转换。
+- XLSX：通过随工作区携带的 `convert-excel-to-md` 转换。
 - `.doc`：先另存为 `.docx`。
-- PDF、Excel：首版未携带对应转换 Skill，必须报告能力缺失，不能静默跳过。
+- `.xls`：先另存为 `.xlsx`。
+- PDF：当前未携带对应转换 Skill，必须报告能力缺失，不能静默跳过。
 
 ## 文件职责
 
