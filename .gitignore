@@ -17,3 +17,8 @@ examples/*/output/
 # macOS
 .DS_Store
 ._*
+
+# 中间文件
+pptkit/data-service-project-mapping-20260827-01
+output/qa
+intermediate/style-reference-media
