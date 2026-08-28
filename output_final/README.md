@@ -6,7 +6,7 @@
 
 | 批次 | 产出日期 | 终稿文件 | 模型 | 运行环境 | 实施范围 | 单次费用 |
 | --- | --- | --- | --- | --- | --- | --- |
-| 第 1 次 | 2026-08-18 | [`0818-1-随身行PPT实践.final.pptx`](./0818-1-随身行PPT实践.final.pptx) | DeepSeek V4 Flash | VS Code + Kilo（接入模型） | 包含环境部署与 PPT 实施 | 约 ¥0.68 |
+| 第 1 次 | 2026-08-18 | [`0818-1-PPT产出实践.final.pptx`](./0818-1-PPT产出实践.final.pptx) | DeepSeek V4 Flash | VS Code + Kilo（接入模型） | 包含环境部署与 PPT 实施 | 约 ¥0.68 |
 | 第 2 次 | 2026-08-19 | [`0819-1-产出PPT实践.final.pptx`](./0819-1-产出PPT实践.final.pptx) | DeepSeek V4 Flash | VS Code + Kilo（接入模型） | 仅 PPT 实施，不包含环境部署 | 约 ¥0.40（精算约 ¥0.43） |
 
 Token 用量、计费规则及费用计算见 [`执行记录.md`](../执行记录.md)。

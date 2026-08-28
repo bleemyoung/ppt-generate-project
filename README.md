@@ -24,7 +24,7 @@ modal/
 ├── scripts/                     # 构建脚本
 ├── examples/                    # 可复现的完整参考案例
 │   ├── template-driven-case/    # 不含真实业务数据的 PptxGenJS 合成案例
-│   └── 随身行PPT实践/
+│   └── PPT产出实践/
 └── .agents/
     └── skills/
         ├── setup-pptx-environment/
@@ -38,7 +38,7 @@ modal/
 
 完全不懂代码的新手：先读 `新手手册.md`，按其中 8 个步骤操作，无需理解目录、命令或阶段名。
 
-完整参考案例位于 `examples/随身行PPT实践/`，对应人工定稿版为 `output_final/0818-1-随身行PPT实践.final.pptx`。
+完整参考案例位于 `examples/PPT产出实践/`，对应人工定稿版为 `output_final/0818-1-PPT产出实践.final.pptx`。
 
 陌生 Agent 首次创建 `scripts/build.mjs` 时，由 `build-ppt-from-source` 自动路由到 Skill 内的 `assets/build-starter.mjs`、PptxGenJS 构建约定和 `examples/template-driven-case/`；空模板不依赖当前业务脚本提供实现上下文。
 
